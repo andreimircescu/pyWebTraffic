@@ -28,6 +28,7 @@ class httpClient(object):
         future = now + self._duration
         self._initializeConnections()
         self._establishConnections()
+
         while time.time() > future:
             pass
 
@@ -42,6 +43,6 @@ class httpClient(object):
             connection.connect()
 
 if __name__=="__main__":
-    testClient = httpClient("www.google.com",80,100)
+    testClient = httpClient("www.google.com",80,1)
     testClient.run()
 
