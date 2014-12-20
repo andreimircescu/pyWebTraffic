@@ -2,6 +2,7 @@ import httplib
 import time
 from multiprocessing import Process
 
+from httpConnection import httpConnection
 class httpClient(object):
     def __init__(self, hostName, portNumber, numberOfConnections = 1, duration = 60):
         self._hostName = hostName
@@ -28,14 +29,13 @@ class httpClient(object):
         future = now + self._duration
         self._initializeConnections()
         self._establishConnections()
-
         while time.time() > future:
             pass
 
     def _initializeConnections(self):
         print "Initializing %s connection(s) ." % self._numberOfConnections
         for i in range(self._numberOfConnections):
-            self._connectionList.append(httplib.HTTPConnection(self._hostName,self._portNumber))
+            self._connectionList.append(httpConnection(self._hostName,self._portNumber))
 
     def _establishConnections(self):
         print "Establishing connections"
@@ -43,6 +43,7 @@ class httpClient(object):
             connection.connect()
 
 if __name__=="__main__":
-    testClient = httpClient("www.google.com",80,1)
+    testClient = httpClient("www.google.com",80,10)
     testClient.run()
+    time.sleep(60)
 
